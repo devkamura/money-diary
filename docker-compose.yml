@@ -1,0 +1,32 @@
+services:
+  db:
+    image: postgres:15
+    container_name: postgres_db
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: money_diary
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./data:/var/lib/postgresql/data
+      - ./init-db:/docker-entrypoint-initdb.d
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: django-web
+    volumes:
+      - .:/workspace
+    working_dir: /workspace
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_NAME: money_diary
+      DB_USER: root
+      DB_PASSWORD: password

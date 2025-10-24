@@ -1,0 +1,7 @@
+{
+  "name": "Django + Postgres",
+  "dockerComposeFile": ["../docker-compose.yml"],
+  "service": "web",
+  "workspaceFolder": "/workspace"
+}
+プロ
